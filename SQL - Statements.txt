@@ -1,0 +1,45 @@
+CREATE TABLE DVD (DVDID int primary key,
+		 Titel VARCHAR(50) not null,
+		 Genre VARCHAR(50) not null,
+		 Altersbeschränkung int not null,
+		 Erscheinungsdatum date not null,
+		 KundenID int not null,
+		 FilialenID int not null
+		);
+
+MariaDB [(none)]>ALTER table DVD add foreign key (KundenID) References Kunde(KundenID);
+MariaDB [(none)]>ALTER table DVD add foreign key (FilialenID) References Filiale(FilialenID);
+
+CREATE TABLE Filiale (FilialenID int primary key,
+		      Straße VARCHAR(50) not null,
+		      Ort VARCHAR(50) not null,
+		      PLZ int not null
+		      );
+
+
+CREATE TABLE Kunde (KundenID int Primary key,
+		    Vorname VARCHAR(50) not null,
+		    Nachname VARCHAR(50) not null,
+		    Straße VARCHAR(50) not null,
+		    Ort VARCHAR(50) not null,
+		    PLZ int not null,
+		    Telefonnummer int not null,
+		    Email VARCHAR(50),
+		    FilialenID int not null
+		   );
+
+MariaDB [(none)]>ALTER table Kunde add foreign key (FilialenID) References Filiale(FilialenID);
+
+CREATE TABLE Mitarbeiter (MitarbeiterID int Primary key,
+			  Vorname VARCHAR(50) not null,
+			  Nachname VARCHAR(50) not null,
+			  FilialenID int not null
+			 );
+
+MariaDB [(none)]>ALTER table Mitarbeiter add foreign key (FilialenID) References Filiale(FilialenID);
+
+CREATE TABLE Bewertungen (BewertungsID int primary key,
+			  DVDID int not null
+			);
+
+MariaDB [(none)]>ALTER table Bewertungen add foreign key (DVDID) References DVD(DVDID);
